@@ -1,60 +1,63 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+<!------ Include the above in your HEAD tag ---------->
+
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
+    
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>Login Page - Product Admin</title>
+	<title>Conference Admin</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
 </head>
-
+	<link rel="stylesheet" href="css/login.css">
 <body>
-  <div class="container tm-mt-big tm-mb-big">
-    <div class="row">
-      <div class="col-12 mx-auto tm-login-col">
-        <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
-          <div class="row">
-            <div class="col-12 text-center">
-              <h2 class="tm-block-title mb-4">Welcome to Dashboard, Login</h2>
+	<div class="container h-100">
+		<div class="d-flex justify-content-center h-100">
+			<div class="user_card">
+				<div class="d-flex justify-content-center">
+					<div class="brand_logo_container">
+						<img src="img/logo.png" class="brand_logo" alt="Logo">
+					</div>
+				</div>
+				<div class="d-flex justify-content-center form_container">
+					<form action="/login" method="post">
+						<div class="input-group mb-3">
+							<div class="input-group-append">
+								<span class="input-group-text"><i class="fas fa-user"></i></span>
+							</div>
+							<input type="text" name="username" class="form-control input_user" value="" placeholder="username">
+              <div id="username-feedback" class="invalid-feedback"></div>
             </div>
-          </div>
-          <div class="row mt-2">
-            <div class="col-12">
-              <form action="/login" method="post" class="tm-login-form">
-                <div class="form-group">
-                  <label for="username">Username</label>
-                  <input name="username" type="text" class="form-control validate" id="username" value="" required />
-                  <div id="username-feedback" class="invalid-feedback"></div>
-                </div>
-                <div class="form-group mt-3">
-                  <label for="password">Password</label>
-                  <input name="password" type="password" class="form-control validate" id="password" value=""
-                    required />
-                  <div class="invalid-feedback">
-                    Password must be at least 6 charactor
-                  </div>
-                </div>
-                <span id="failure-flash"> {{message}} </span>
-                <div class="form-group mt-4">
-                  <button type="submit" class="btn btn-primary btn-block text-uppercase">
-                    Login
-                  </button>
-                </div>
-                <button class="mt-5 btn btn-primary btn-block text-uppercase">
-                  Forgot your password?
-                </button>
-              </form>
+						<div class="input-group mb-2">
+							<div class="input-group-append">
+								<span class="input-group-text"><i class="fas fa-key"></i></span>
+							</div>
+							<input type="password" name="password" class="form-control input_pass" value="" placeholder="password">
+              <div class="invalid-feedback">
+                  Password must be at least 6 charactor
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script src="js/jquery-3.3.1.min.js"></script>
+            <span id="failure-flash"> {{message}} </span>
+						<div class="form-group">
+							<div class="custom-control custom-checkbox">
+								<input type="checkbox" class="custom-control-input" id="customControlInline">
+								<label class="custom-control-label" for="customControlInline">Remember me</label>
+							</div>
+						</div>
+							<div class="d-flex justify-content-center mt-3 login_container">
+				 	<button type="submit" class="btn login_btn">Login</button>
+				   </div>
+					</form>
+				</div>
+		
+			</div>
+		</div>
+	</div>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+   <script src="js/jquery-3.3.1.min.js"></script>
   <!-- https://jquery.com/download/ -->
   <script src="js/accounts/login.js"></script>
-
 </body>
-
 </html>
