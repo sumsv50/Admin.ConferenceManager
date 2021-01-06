@@ -1,0 +1,32 @@
+<div id="carouselExampleIndicators" class="carousel slide tm-avatar-container" data-ride="carousel">
+  <a id="btnDeleteImg" class="tm-avatar-delete-link">
+      <i class="far fa-trash-alt tm-product-delete-icon"></i>
+  </a>
+  <ol class="carousel-indicators">
+      \{{#each imgs}}
+          <li data-target="#carouselExampleIndicators" data-slide-to="\{{@index}}"
+            \{{#unless @index}} class="active" \{{/unless}} ></li>
+      \{{/each}}
+  </ol>
+  <div id="slide-img" class="carousel-inner">
+      \{{#each imgs}}
+          <div class="carousel-item \{{#unless @index}} active \{{/unless}}" index= \{{@index}}>
+              <img id="imgPreview" class="d-block w-100" alt="Preview Img" src="\{{this.src}}">
+              <div class="carousel-caption d-none d-lg-block">
+
+                  <span id="nameImg">\{{this.name}}</span>
+              </div>
+          </div>
+      \{{/each}}
+  </div>
+  </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>

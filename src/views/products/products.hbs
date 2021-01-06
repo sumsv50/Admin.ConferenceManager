@@ -1,0 +1,270 @@
+<head></head>
+
+<body id="reportsPage">
+
+    <div class="container-fluid mt-5">
+        <div class="row tm-content-row">
+            <div class="col-sm-12 col-md-12 col-lg-9 col-xl-9 tm-block-col">
+                <div class="tm-bg-primary-dark tm-block tm-block-products">
+
+                   
+                    <div class="row justify-content-end">
+                        {{#each categories}}
+                            {{#ifEquals this._id ../currentCategory}}
+                            <div id="myToast" class="toast"  data-autohide="false">
+                                <div class="toast-header">
+                                    <strong >{{this.name}}</strong>
+                                    <button id="btnCategory" type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"
+                                        onclick="onClickBtnCategory()">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                
+                            </div>
+                            {{/ifEquals}}
+                        {{/each}}
+
+                        {{#if key}}
+                        <div id="myToast" class="toast"  data-autohide="false">
+                            <div class="toast-header">
+                                <strong >{{key}}</strong>
+                                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"
+                                    onclick="onClickBtnKey()">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                        {{/if}}
+
+
+
+                        <div class="col-5 input-group mb-3">
+                            <input id="txtKey" type="text" class="form-control txtSearch" placeholder="Search" aria-label="Search"
+                                aria-describedby="button-addon2">
+                            <button class="btn btn-outline-secondary btnSearch" type="button" id="btnSearch" onclick="onClickSearch()">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="tm-product-table-container">
+                        <table class="table table-hover tm-table-small tm-product-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">EVENT NAME</th>
+                                    <th id="author-column" scope="col">SPEAKER</th>
+                                    <th id="unit-sold-column" scope="col">REGISTER</th>
+
+                                    <th id="created-at-column" scope="col">DATE</th>
+                                    <th id="bin-column" scope="col">&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody id="items-list">
+
+                                {{#each products}}
+                                <tr>
+                                    <td class="tm-product-name">
+                                        <a class='link-edit' href='products/{{this._id}}/edit'>{{this.name}}</a>
+                                    </td>
+                                    <td>{{this.author}}</td>
+                                    <td>0</td>
+                                    <td>{{generateDate this.createdAt "MM/DD/YYYY, h:mm:ss A"}}</td>
+                                    <td>
+                                        <a href="#" class="tm-product-delete-link" data-id="{{this._id}}"
+                                            data-cate="{{this.categoryID}}" data-name="{{this.name}}"
+                                            data-toggle="modal" data-target="#delete-product-modal">
+                                            <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {{/each}}
+
+                            </tbody>
+                        </table>
+                        </div>
+                        
+                        <div class="row justify-content-center">
+                            <nav aria-label="Page navigation example align-items-end">
+                                <ul id="pagination-wrapper" class="pagination">   
+                                </ul>
+                            </nav>
+                        </div>
+                        
+                        <!-- table container -->
+                        <a href="products/create-product" class="btn btn-primary btn-block text-uppercase mb-3">Add new
+                            event</a>
+                    {{!-- <button class="btn btn-primary btn-block text-uppercase">
+                        Delete selected products
+                    </button> --}}
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-3 col-xl-3 tm-block-col">
+                <div class="tm-bg-primary-dark tm-block tm-block-product-categories">
+                    <h2 class="tm-block-title">Event Categories</h2>
+                    <div class="tm-product-table-container">
+                        <table class="table tm-table-small tm-product-table">
+                            <tbody>
+                                <tr>
+                                     <td class="tm-product-name">
+                                        <a href="/products">Total ({{numOfBooks}})</a>
+                                    </td>
+                                </tr>
+                                {{#each categories}}
+                                <tr>
+                                    <td class="tm-product-name">
+                                        <a {{#ifEquals this._id ../currentCategory}} class="active" {{/ifEquals}}
+                                            href="products?category={{this._id}}">{{this.name}} ({{this.numOfBook}})</a>
+                                    </td>
+                                    <td class="text-center">
+
+                                        {{!-- --------Button delete Category-------- --}}
+                                        {{!-- <a href="#" class="tm-product-delete-link">
+                                            <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                                            </a> --}}
+
+
+                                    </td>
+                                </tr>
+                                {{/each}}
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- table container -->
+                    <button class="btn btn-primary btn-block text-uppercase mb-3" data-toggle="modal"
+                        data-target="#addNewCategoryDialog">
+                        Add new category
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{!-- ------------form delete product-------------- --}}
+    <form name="delete-product-form" method="POST"></form>
+
+    {{!-- ------------Confirm delete product-------------- --}}
+    <div class="modal fade" id="delete-product-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete product</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button id="btnDeleteProduct" type="button" class="btn btn-danger"
+                        data-dismiss="modal">Delete</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{!-- ------------DIALOG ADD NEW CATEGORY-------------- --}}
+    <div class="modal fade" id="addNewCategoryDialog" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add new category</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="addNewCategoryForm" method="POST" action="products/store-category" autocomplete="nope">
+                        <div class="form-group">
+                            <p>Enter new category name: </p>
+                            <input name="name" id="nameCategory" type="" class="form-control" autofocus
+                                autocomplete="nope">
+                            <div class="invalid-feedback">
+                                Enter name.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <p>Re-enter name: </p>
+                            <input id="nameCategory_retype" type="text" class="form-control"
+                                autocomplete="nope" />
+                            <div class="invalid-feedback">
+                                Do not match
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="btnAddNewCategory" class="btn btn-primary" disabled="true" type="submit"
+                        form="addNewCategoryForm" value="Submit">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src='js/function/paginate.js'></script>
+<script src='/js/product.js'></script>
+<script type="text/x-handlebars" id="list-item-template">
+    {{>productsTemplate}}
+</script>
+<script type="text/x-handlebars" id="btnPaginate-item">
+    {{>btnPaginateTemplate}}
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('.toast').toast('show');
+    })
+
+        //Paginate button
+        var typeRou = "products";
+        var behavior = "replaceProducts";
+        var totalPages, currentPage, hasPrevPage, hasNextPage;
+        {{#if totalPages }} totalPages = {{totalPages}} {{/if}};
+        {{#if currentPage }} currentPage = {{currentPage}} {{/if}};
+        {{#if hasPrevPage }} hasPrevPage = {{hasPrevPage}} {{/if}};
+        {{#if hasNextPage }} hasNextPage = {{hasNextPage}} {{/if}};
+
+
+        paginationBtn(typeRou, behavior, totalPages, currentPage, hasPrevPage, hasNextPage);
+       
+
+        //---------------SEARCH--------------------//
+        var txtKey = document.getElementById('txtKey');
+
+        //set key user have been search
+        {{#if key}} txtKey.value = '{{key}}' {{/if}};
+
+        txtKey.addEventListener('keyup', ()=> {
+            if (event.keyCode === 13) {
+                document.getElementById("btnSearch").click();
+            }
+        })
+
+        onClickSearch = () => {
+            urlParams.delete('page');
+            urlParams.set('key', txtKey.value);
+            window.location = `/products?${urlParams}`;
+        }
+
+
+        //Tag search
+        onClickBtnCategory = () => {
+            urlParams.delete('category');
+            window.location = `/products?${urlParams}`;
+        }
+        onClickBtnKey = () => {
+            urlParams.delete('key');
+            window.location = `/products?${urlParams}`;
+        }
+
+   
+       
+    </script>
+   
+</body>

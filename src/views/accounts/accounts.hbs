@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Accounts - Product Admin</title>
+</head>
+
+<body id="reportsPage">
+
+    <div class="container mt-5">
+        <div class="row tm-content-row">
+            <div class="col-12 tm-block-col">
+                <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+                    <h2 class="tm-block-title">List of Accounts</h2>
+                    <p class="text-white">Accounts</p>
+                    <select id="select-user" class="custom-select">
+                        <option value="0" selected disabled>Select account</option>
+                        <option value="admin"
+                        {{#ifEquals type "admin"}}selected {{/ifEquals}}>
+                            Admin
+                        </option>
+                        <option value="user"
+                        {{#ifEquals type "user"}}selected {{/ifEquals}}>
+                            User
+                        </option>
+                    </select>
+                </div>
+
+                <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+
+                    <div class="row justify-content-end">
+
+                        {{#if key}}
+                        <div id="myToast" class="toast" data-autohide="false">
+                            <div class="toast-header">
+                                <strong>{{key}}</strong>
+                                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"
+                                    onclick="onClickBtnKey()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                        {{/if}}
+
+
+
+                        <div class="col-5 input-group mb-3">
+                            <input id="txtKey" type="text" class="form-control txtSearch" placeholder="Search"
+                                aria-label="Search" aria-describedby="button-addon2">
+                            <button class="btn btn-outline-secondary btnSearch" type="button" id="btnSearch"
+                                onclick="onClickSearch()">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="tm-product-table-container">
+                        <table class="table table-hover tm-table-small tm-product-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">&nbsp;</th>
+                                    <th scope="col">Username</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Status</th>
+
+                                    <th scope="col">Created at</th>
+                                    <th scope="col">&nbsp;</th>
+                                    <th scope="col">&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody id="items-list">
+                                {{#each accounts}}
+                                <tr>
+                                    <th scope="row"><input type="checkbox" /></th>
+                                    <td class="tm-product-name">
+                                        <a class='link-edit' href='accounts/{{../type}}/{{this._id}}/view'>
+                                            {{this.username}}
+                                        </a>
+                                    </td>
+                                    <td>{{this.name}}</td>
+
+                                    <td>
+                                        {{#ifEquals this.status "ACTIVE"}}
+                                        <i title="Status: ACTIVE" class="status-icon fas fa-circle"></i>
+                                        {{else}}
+                                        <i title="Status: BLOCK" class="status-icon fas fa-ban"></i>
+                                        {{/ifEquals}}
+                                    </td>
+
+                                    <td>
+                                        {{#if this.createdAt}}
+                                            {{generateDate this.createdAt "MM/DD/YYYY, h:mm:ss A"}}
+                                        {{/if}}
+                                    </td>
+                                    <td>
+                                        {{#ifIdEquals this._id ../user._id}}
+                                        {{else}}
+                                            {{#ifEquals this.status "ACTIVE"}}
+                                            <a title="Block" href="#" class="tm-product-delete-link" id=\{{this._id}}>
+                                                <i class="fas fa-lock-open"></i>
+                                                <div id="spinner-change-status" class="spinner-border spinner-border-sm"
+                                                    role="status" hidden></div>
+                                            </a>
+                                            {{else}}
+                                            <a title="UnBlock" href="#" class="tm-product-delete-link" id=\{{this._id}}>
+                                                <i class="fas fa-lock"></i>
+                                                <div id="spinner-change-status" class="spinner-border spinner-border-sm"
+                                                    role="status" hidden></div>
+                                            </a>
+                                            {{/ifEquals}}
+                                        {{/ifIdEquals}}
+                                    </td>
+                                    <td>
+                                         {{#ifIdEquals this._id ../user._id}}
+
+                                             <span>Me</span>
+                                            
+                                        {{else}}
+                                            <a href="#" class="tm-product-delete-link" data-id="\{{this._id}}"
+                                                data-name="\{{this.name}}" data-toggle="modal"
+                                                data-target="#delete-product-modal">
+                                                <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                                            </a>
+                                        {{/ifIdEquals}}
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="row justify-content-center">
+                        <nav aria-label="Page navigation example align-items-end">
+                            <ul id="pagination-wrapper" class="pagination">
+                            </ul>
+                        </nav>
+                    </div>
+
+                    <!-- table container -->
+                    {{!-- <a href="products/create-product" class="btn btn-primary btn-block text-uppercase mb-3">Add
+                        new
+                        product</a> --}}
+                </div>
+            </div>
+        </div>
+        <!-- row -->
+
+        <div class="row tm-content-row">
+            <div class="tm-block-col tm-col-avatar">
+                <div class="tm-bg-primary-dark tm-block tm-block-avatar">
+                    <h2 class="tm-block-title">Avatar</h2>
+                    <div class="tm-avatar-container">
+                        <img id="imgPreview" src="/img/avatar-default.jpg" alt="Avatar"
+                            class="tm-avatar img-fluid mb-4" />
+                        <a id="btnDeleteImg" class="tm-avatar-delete-link">
+                            <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                        </a>
+                    </div>
+                    <input type="button" class="btn btn-primary btn-block mx-auto" value="UPLOAD PRODUCT IMAGE"
+                        onclick=" document.getElementById('fileInput').click();" />
+                </div>
+            </div>
+            <div class="tm-block-col tm-col-account-settings">
+                <div class="tm-bg-primary-dark tm-block tm-block-settings">
+                    <h2 class="tm-block-title">Create Admin-Account</h2>
+                    <form method='POST' action="/accounts/store-admin-account" class="tm-signup-form row"
+                        enctype="multipart/form-data">
+                        <input name="adminImg" id="fileInput" type="file" accept="image/*" hidden="hidden" />
+                        <div class="form-group col-lg-6">
+                            <label for="username">Account Name*</label>
+                            <input id="username" name="username" type="text" class="form-control validate" required />
+                            <div id="username-feedback" class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="name">Name</label>
+                            <input id="name" name="name" type="text" class="form-control validate" />
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="email">Account Email*</label>
+                            <input id="email" name="email" type="email" class="form-control validate" required />
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="password">Password*</label>
+                            <input id="password" name="password" type="password" class="form-control validate"
+                                required />
+                            <div class="invalid-feedback">
+                                Password must be at least 6 charactor
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="password2">Re-enter Password*</label>
+                            <input id="password2" name="password2" type="password" class="form-control validate"
+                                required />
+                            <div class="invalid-feedback">
+                                Do not match with password
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="phone">Phone</label>
+                            <input id="phone" name="phone" type="tel" class="form-control validate" />
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary btn-block text-uppercase">
+                                Add Account
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+
+    <script type="text/x-handlebars" id="list-item-template">
+        {{>template/listAccountTemplate}}
+    </script>
+    <script type="text/x-handlebars" id="btnPaginate-item">
+        {{>btnPaginateTemplate}}
+    </script>
+
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <!-- https://jquery.com/download/ -->
+    <script src='js/function/paginate.js'></script>
+    <script src="js/accounts/accounts-add-new-admin.js"></script>
+    <script src="js/accounts/account-list-accounts.js"></script>
+    <script src="js/function/imgPreview.js"></script>
+    <script>
+        var meId;
+        {{#if user }}
+        meId = "{{user._id}}";
+        {{/if}}
+
+        //Paginate button
+        var typeRou = "accounts";
+        var behavior = "replaceAccounts";
+        var totalPages, currentPage, hasPrevPage, hasNextPage, type;
+
+        
+        {{#if type}} type = "{{type}}" {{/if}};
+
+        {{#if totalPages }} totalPages = {{totalPages}} {{/if}};
+        {{#if currentPage }} currentPage = {{currentPage}} {{/if}};
+        {{#if hasPrevPage }} hasPrevPage = {{hasPrevPage}} {{/if}};
+        {{#if hasNextPage }} hasNextPage = {{hasNextPage}} {{/if}};
+
+        {{#if totalPages}}
+            paginationBtn(typeRou, behavior, totalPages, currentPage, hasPrevPage, hasNextPage);
+        {{/if}}
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,70 @@
+<div class="container mt-5">
+    <div class="row tm-content-row">
+        <div class="tm-block-col tm-col-avatar">
+            <div class="tm-bg-primary-dark tm-block tm-block-avatar">
+                <h2 class="tm-block-title">Avatar</h2>
+                <div class="tm-avatar-container">
+                    <img id="imgPreview" src="{{account.avt_img}}" onerror="this.src='/img/avatar-default.jpg'"
+                        alt="Avatar" class="tm-avatar img-fluid mb-4" />
+                </div>
+            </div>
+        </div>
+        <div class="tm-block-col tm-col-account-settings">
+            <div class="tm-bg-primary-dark tm-block tm-block-settings">
+                <h2 class="tm-block-title">Detail - Account</h2>
+                <form method='POST' action="/accounts/store-admin-account" class="tm-signup-form row"
+                    enctype="multipart/form-data">
+                    <input name="adminImg" id="fileInput" type="file" accept="image/*" hidden="hidden" />
+                    <div class="form-group col-lg-6">
+                        <label for="username"> Username </label>
+                        <input id="username" name="username" type="text" class="form-control validate" disabled
+                            value="{{account.username}}"/>
+                       
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label for="name">Name</label>
+                        <input id="name" name="name" type="text" class="form-control validate" disabled
+                             value="{{account.name}}"/>
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label for="email">Account Email</label>
+                        <input id="email" name="email" type="email" class="form-control validate" disabled
+                             value="{{account.email}}"/>
+                    </div>
+                    
+                    <div class="form-group col-lg-6">
+                        <label for="phone">Phone</label>
+                        <input id="phone" name="phone" type="tel" class="form-control validate" disabled
+                             value="{{account.phone}}"/>
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label for="created-at">Created at</label>
+                        <input id="created-at" name="created-at" type="text" class="form-control validate" disabled
+                           {{#if account.createdAt}}
+                            value="{{generateDate account.createdAt "MM/DD/YYYY, h:mm:ss A"}}"
+                           {{/if}}/>
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label for="status"> Status
+                            {{#ifEquals account.status "ACTIVE"}}
+                            <i title="ACTIVE" class="status-icon fas fa-circle"></i>
+                            {{else}}
+                            <i title="BLOCK" class="status-icon fas fa-ban"></i>
+                            {{/ifEquals}}
+                        </label>
+                        <input id="status" name="status" type="text" class="form-control validate" disabled
+                            value="{{account.status}}"/>
+                    </div>
+
+                    <div class="form-group col-lg-12">
+                        <label for="other">Other</label>
+                        <textarea id="other" name="other" type="text" class="form-control validate" disabled>
+                        </textarea>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+ <script src="js/jquery-3.3.1.min.js"></script>

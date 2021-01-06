@@ -1,0 +1,162 @@
+<!-- row -->
+<div class="container mt-5">
+<div class="row tm-content-row">
+    <div class="tm-block-col tm-col-avatar">
+        <div class="tm-bg-primary-dark tm-block tm-block-avatar">
+            <h2 class="tm-block-title">Avatar</h2>
+            <div class="tm-avatar-container">
+                <img id="imgPreview" alt="Avatar" onerror="this.src='/img/avatar-default.jpg'"
+                class="tm-avatar img-fluid mb-4" src="{{user.avt_img}}"/>
+                <a id="btnDeleteImg" class="tm-avatar-delete-link">
+                    <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                </a>
+            </div>
+            <div>
+                <button type="button" class="btn-save-avt btn-save btn-primary" hidden="hidden">
+                    Save
+                    <div class="spinner-border spinner-border-sm" role="status" hidden="hidden">
+                    <span class="sr-only">Loading...</span>
+                    </div>
+                </button>
+            </div>
+                
+                <input type="button" class="btn btn-primary btn-block mx-auto"
+                value="UPLOAD PRODUCT IMAGE"
+                onclick=" document.getElementById('fileInput').click();" />
+        </div>
+    </div>
+    <div class="tm-block-col tm-col-account-settings">
+        <div class="tm-bg-primary-dark tm-block tm-block-settings">
+            <h2 class="tm-block-title">My Profile</h2>
+            <form id="form-profile" method='POST' action="/accounts/store-admin-account" class="tm-signup-form row"
+                enctype="multipart/form-data">
+                <input name="adminImg" id="fileInput" type="file" accept="image/*" hidden="hidden" />
+                <div class="form-group col-lg-8">
+                    <label for="username">Account Name</label>
+                    <input id="username" name="username" type="text" class="form-control validate"
+                        value="{{user.username}}" disabled/>
+                    <div id="username-feedback" class="invalid-feedback"></div>
+                </div>
+                    
+                   
+
+                <div class="form-group container-fluid row">
+                    <div class="col-lg-8">
+                        <label for="name">Name</label>
+                        <img id="icon-name-edit" class="icon-edit" src="/img/icon/pen-solid.svg"/>
+
+                        <input id="name" name="name" type="text" class="form-control validate"
+                            value="{{user.name}}"/>
+                        <span class="form-error-message"></span>
+                    </div>
+
+                    <div class="col-lg-4 btns-input" hidden="hidden">
+                        <button type="button" class="btn-profile btn-save btn-primary">
+                            Save
+                        </button>
+                        <button type="button" class="btn-profile  btn-cancel  btn-secondary">Cancel</button>
+                    </div>
+                </div>
+
+                <div class="form-group container-fluid row">
+                    <div class="col-lg-8">
+                        <label for="email">Account Email</label>
+                        <img id="icon-email-edit" class="icon-edit" src="/img/icon/pen-solid.svg"/>
+
+                        <input id="email" name="email" type="email" class="form-control validate" required
+                            value="{{user.email}}"/>
+                        <span class="form-error-message"></span>
+                    </div>
+                   <div class="col-lg-4 btns-input" hidden="hidden">
+                        <button type="button" class="btn-profile btn-save btn-primary">
+                            Save
+                        </button>
+                        <button type="button" class="btn-profile  btn-cancel  btn-secondary">Cancel</button>
+                    </div>
+                </div>
+
+                <div class="form-group container-fluid row">
+                    <div class="col-lg-8">
+                        <label for="phone">Phone</label>
+                        <img id="icon-phone-edit" class="icon-edit" src="/img/icon/pen-solid.svg"/>
+                        <input id="phone" name="phone" type="tel" class="form-control validate"
+                            value="{{user.phone}}"/>
+                        <span class="form-error-message"></span>
+                    </div>
+                    <div class="col-lg-4 btns-input" hidden="hidden">
+                         <button type="button" class="btn-profile btn-save btn-primary">
+                            Save
+                        </button>
+                        <button type="button" class="btn-profile  btn-cancel  btn-secondary">Cancel</button>
+                    </div>
+                </div>
+
+
+                <div class="form-group col-lg-8">
+                <hr>
+                <label for="password">Password</label>
+                    <img id="icon-password-edit" class="icon-edit" src="/img/icon/pen-solid.svg"/>
+                </div>
+
+                <div id="notification-pass" class="form-group col-lg-8"></div>
+
+                 <div id="form-password-edit" class="form-group col-lg-8">
+                   
+                        <div class="form-group col-lg-12">
+                            <label for="current_password">Current Password</label>
+                            <input id="current-password" name="current_password" type="password" class="form-control validate"
+                                placeholder="enter you current password"/>
+                            <span class="form-error-message"></span>
+                        </div>
+                        <div class="form-group col-lg-12">
+                            <label for="new_password">New Password</label>
+                            <input id="new-password" name="new_password" type="password" class="form-control validate"
+                            placeholder="enter a new password" />
+                            <span class="form-error-message"></span>
+                        </div>
+                        <div class="form-group col-lg-12">
+                            <label for="confirm_new_password">Confirm New Password</label>
+                            <input id="confirm-new-password" name="confirm_new_password" type="password" class="form-control validate"
+                                placeholder="enter the password again"/>
+                            <span class="form-error-message"></span>
+                        </div>
+
+                         <div class="col-8">
+                            <button id="btn-change-password" class="btn btn-primary">
+                                Update password
+                            </button>
+                        </div>
+                 </div>
+
+               
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/validator.js"></script>
+<script src="js/accounts/my-profile.js"></script>
+<script src="js/function/imgPreview.js"></script>
+<script>
+    Validator({
+        form: '#form-profile',
+        errMessageSelector: '.form-error-message',
+        rules: [
+            Validator.isRequired('#name', 'Name is required' ),
+            Validator.isRequired('#email', 'Email is required' ),
+            Validator.isEmail('#email', 'Field must contain a valid email address' ),
+            Validator.isRequired('#phone', 'Phone is required' ),
+            Validator.isPhone('#phone', 'Field must be phone number'),
+            Validator.isRequired('#current-password', 'Current Password is required'),
+            Validator.minLength('#current-password', 6, 'Password must be at least 6 charactor'),
+            Validator.isRequired('#new-password', 'New Password is required'),
+            Validator.minLength('#new-password', 6, 'Password must be at least 6 charactor'),
+             Validator.notSame('#new-password','#current-password', 'Current password and new password cannot be same.'),
+            Validator.isRequired('#confirm-new-password', 'Confirm New Password is required'),
+            Validator.minLength('#confirm-new-password', 6, 'Password must be at least 6 charactor'),
+            Validator.match('#confirm-new-password', '#new-password', 'Passwords do not match.'),
+           
+        ]
+    })
+</script>

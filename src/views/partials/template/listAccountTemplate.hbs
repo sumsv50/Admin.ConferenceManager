@@ -1,0 +1,53 @@
+\{{#each accounts}}
+    <tr>
+        <th scope="row"><input type="checkbox" /></th>
+        <td class="tm-product-name">
+            <a class='link-edit' href='accounts/\{{this.type}}/\{{this._id}}/view'>
+                \{{this.username}}
+            </a>
+        </td>
+        <td>\{{this.name}}</td>
+        
+        <td>
+                \{{#if this.active}}
+                    <i title="Status: ACTIVE" class="status-icon fas fa-circle"></i>
+                \{{else}}
+                    <i title="Status: BLOCK" class="status-icon fas fa-ban"></i>
+                \{{/if}}
+        </td>
+        
+        <td>
+            \{{#if this.createdAt}}
+            \{{this.createdAt}}
+            \{{/if}}    
+        </td>
+        <td>
+            \{{#unless this.me}}
+                \{{#if this.active}}
+                <a title="Block" href="#" class="tm-product-delete-link" id=\{{this._id}}>
+                    <i class="fas fa-lock-open"></i>
+                    <div id="spinner-change-status" class="spinner-border spinner-border-sm" role="status" hidden></div>
+                </a>
+                \{{else}}
+                <a title="UnBlock" href="#" class="tm-product-delete-link" id=\{{this._id}}>
+                    <i class="fas fa-lock"></i>
+                    <div id="spinner-change-status" class="spinner-border spinner-border-sm" role="status" hidden></div>
+                </a>
+                \{{/if}}
+            \{{/unless}}
+        </td>
+        <td>
+            \{{#unless this.me}}
+                <a href="#" class="tm-product-delete-link" data-id="\{{this._id}}"
+                    data-name="\{{this.name}}"
+                    data-toggle="modal" data-target="#delete-product-modal">
+                    <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                </a>
+            \{{/unless}}
+            \{{#if this.me}}
+                <span>Me</span>
+            \{{/if}}
+        </td>
+    </tr>
+\{{/each}}
+

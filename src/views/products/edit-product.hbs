@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head></head>
+
+<body id="reportsPage">
+    <div class="container tm-mt-big tm-mb-big">
+        <div class="row">
+            <div class="col-xl-9 col-lg-10 col-md-12 col-sm-12 mx-auto">
+                <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+                    <div class="row">
+                        <div class="col-12">
+                            <h3 class="tm-block-title d-inline-block">Edit Product</h3>
+                        </div>
+                    </div>
+                    <div class="row tm-edit-product-row">
+                        <div class="col-xl-12 col-lg-12 col-md-12">
+                            <form method="POST" action="/products/{{product._id}}?_method=PUT"
+                                class="tm-edit-product-form" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="form-group mb-3 col-xs-12 col-sm-8">
+                                        <label for="name">Product Name * </label>
+                                        <input id="name" name="name" type="text" class="form-control validate"
+                                            value="{{product.name}}" required/>
+                                    </div>
+                                    <div class="form-group mb-3 col-xs-12 col-sm-4">
+                                        <label for="price">Price *</label>
+                                        <input id="price" name="price" type="number" step="0.01"
+                                            class="form-control validate" value="{{product.price}}" required />
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group mb-3 col-xs-12 col-sm-6">
+                                        <label for="author">Author *</label>
+                                        <input id="author" name="author" type="text" class="form-control validate"
+                                            data-large-mode="true" value="{{product.author}}" required />
+                                    </div>
+                                    <div class="form-group mb-3 col-xs-12 col-sm-6">
+                                        <label for="type">Category *</label>
+                                        <select name="categoryID" class="custom-select" id="category" required>
+                                            <option selected disabled>Select category</option>
+                                            {{#each categories}}
+                                            <option value={{this._id}} {{#ifEquals this._id ../product.categoryID}}
+                                                selected {{/ifEquals}}>{{this.name}}
+                                            </option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="overview">Overview</label>
+                                    <textarea class="form-control validate" name="overview"
+                                        rows="4">{{product.overview}}</textarea>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="description">Description</label>
+                                    <textarea class="form-control validate" name="description"
+                                        rows="6">{{product.description}}</textarea>
+                                </div>
+                                <h2 class="tm-block-title d-inline-block">Detail</h3>
+                                    <div class="row">
+                                        <div class="form-group mb-3 col-xs-12 col-sm-6">
+                                            <label for="isbn">ISBN-13</label>
+                                            <input id="isbn" name="isbn" type="text" class="form-control validate"
+                                                data-large-mode="true" value="{{product.detail.isbn}}" />
+                                        </div>
+                                        <div class="form-group mb-3 col-xs-12 col-sm-6">
+                                            <label for="publisher">Publisher </label>
+                                            <input id="publisher" name="publisher" type="text"
+                                                class="form-control validate" value="{{product.detail.publisher}}" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group mb-3 col-xs-12 col-sm-6">
+                                            <label for="publication_date">Publication date</label>
+                                            <input id="publication_date" name="publication_date" type="text"
+                                                class="form-control validate" data-large-mode="true"
+                                                value="{{product.detail.publication_date}}" />
+                                        </div>
+                                        <div class="form-group mb-3 col-xs-12 col-sm-6">
+                                            <label for="pages">Pages </label>
+                                            <input id="pages" name="pages" type="text" class="form-control validate"
+                                                value="{{product.detail.pages}}" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group mb-3 col-xs-12 col-sm-6">
+                                            <label for="sales_rank">Sales rank</label>
+                                            <input id="sales_rank" name="sales_rank" type="text"
+                                                class="form-control validate" data-large-mode="true"
+                                                value="{{product.detail.sales_rank}}" />
+                                        </div>
+                                        <div class="form-group mb-3 col-xs-12 col-sm-6">
+                                            <label for="product_dimensions">Product dimensions </label>
+                                            <input id="product_dimensions" name="product_dimensions" type="text"
+                                                class="form-control validate"
+                                                value="{{product.detail.product_dimensions}}" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group mb-3 mt-4 col-xs-12 col-sm-4">
+                                            <input name="img" id="fileInput" type="file" accept="image/*"
+                                                hidden="hidden" multiple/>
+                                            <div class="custom-file mt-3 mb-3">
+                                                <input type="button" class="btn btn-primary btn-block mx-auto"
+                                                    value="ADD PRODUCT IMAGE"
+                                                    onclick=" document.getElementById('fileInput').click();" />
+                                            </div>
+                                        </div>
+                                        <div id="carousel-place-holder" class="form-group mb-3 col-xs-12 col-sm-8 mt-3">
+                                        </div>
+                                    </div>
+                                    <input id="photos-remove" name="photos_remove" type="text" class="form-control validate"
+                                        hidden/>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary btn-block text-uppercase">Update Now</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <!-- https://jquery.com/download/ -->
+    <script src="jquery-ui-datepicker/jquery-ui.min.js"></script>
+    <!-- https://jqueryui.com/download/ -->
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+    <script type="text/x-handlebars" id="slide-img-template">
+        {{>slide-img}}
+    </script>
+    <script src="js/product/edit-product.js"></script>
+    <script>
+        
+        var imgs = [];
+        var template = Handlebars.compile($('#slide-img-template').html());
+
+        {{#each product.img}}
+            imgs.push({ src:"{{this.url}}", index: {{@index}} });
+        {{/each}}
+
+        updateImg();
+        
+    </script>
+</body>
+
+</html>

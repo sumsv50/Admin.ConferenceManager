@@ -1,0 +1,19 @@
+
+\{{#each products}}
+    <tr>
+       
+        <td class="tm-product-name">
+            <a class='link-edit' href='products/\{{this._id}}/edit'>\{{this.name}}</a>
+        </td>
+        <td>\{{this.author}}</td>
+        <td>0</td>
+        <td>\{{this.createdAt}}</td>
+        <td>
+            <a href="#" class="tm-product-delete-link" data-id="\{{this._id}}"
+                data-cate="\{{this.categoryID}}" data-name="\{{this.name}}"
+                data-toggle="modal" data-target="#delete-product-modal">
+                <i class="far fa-trash-alt tm-product-delete-icon"></i>
+            </a>
+        </td>
+    </tr>
+\{{/each}}

@@ -1,0 +1,46 @@
+<script>
+    var pStart = 1;
+        var pEnd = totalPages;
+        var urlParams = new URLSearchParams(window.location.search);
+    
+        var wrapper = document.getElementById('pagination-wrapper');
+
+        urlParams.set('page', '1');
+
+        wrapper.innerHTML =`<li class="page-item \{{#unless hasPrevPage}}disabled\{{/unless}}">
+                                <a class="page-link" onclick="${behavior}('/api/${typeRou}?${urlParams}')"
+                                    aria-label="First">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>`;
+        if(currentPage > 4) {
+            pStart = currentPage - 3;
+            wrapper.innerHTML += `<li class="page-item"><a class="page-link">...</a></li>`;
+        }
+            
+        pEnd = currentPage + 3 < totalPages ? currentPage + 3 : totalPages; 
+            
+        for(var i = pStart; i <= pEnd; i++){
+            if(i == currentPage){
+                wrapper.innerHTML += `<li class="page-item active"><a class="page-link">${i}</a></li>`;
+            } else {
+                urlParams.set('page', i);
+                wrapper.innerHTML += `<li class="page-item"><a class="page-link"
+                    onclick="${behavior}('/api/${typeRou}?${urlParams}')"">${i}</a></li>`;
+            }
+        }
+
+        if(pEnd < totalPages) {
+            wrapper.innerHTML += `<li class="page-item"><a class="page-link">...</a></li>`;
+        }
+
+        urlParams.set('page', totalPages);
+
+        wrapper.innerHTML += `<li class="page-item \{{#unless hasNextPage}}disabled\{{/unless}}"">
+                                    <a class="page-link" onclick="${behavior}('/api/${typeRou}?${urlParams}')" aria-label="Last">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>`
+
+
+</script>
