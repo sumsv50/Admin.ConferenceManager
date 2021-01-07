@@ -1,0 +1,117 @@
+*{ 
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font-family: Myriad Pro Semibold;
+ }
+
+.req1 {
+
+    width: 250px;
+    padding-bottom: 60px;
+    margin-left: 10px;
+
+}
+.req 
+{   
+    display: flex;
+    justify-content: center;
+   
+   
+}
+.req ul {
+    display: flex;
+    flex-wrap: wrap;
+    line-height: 50px;
+    display: flex;
+    text-decoration: none;
+    list-style:  none;
+    width: 400px;
+  
+    padding-bottom: 60px;
+    text-align: center;
+
+
+}
+.req ul li {
+
+    line-height: 60px;
+    width:  200px;
+    font-size: 20px;
+    text-align: center;
+}
+.title {
+    align-self: flex-start;
+    background-color: pink;
+    padding: 30px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    margin-top: 750px;
+    display: flex;
+    justify-content: center;
+}
+.detail {
+    margin-top: 40px;
+    align-self: flex-start;
+    background-color: pink;
+    padding: 30px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    text-align: left;
+    display: flex;
+    justify-content: center;
+}
+
+
+.split {
+   display: flex;
+  height: 100%;
+  width: 50%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+   
+}
+
+
+        .left {
+
+              left: 0;
+             
+            }
+
+            /* Control the right side */
+            .right {
+              right: 0;
+              
+            }
+
+             .centered1 {
+                width: 700px;
+                align-self: flex-start;
+              position: absolute;
+              top: 22%;
+              left: 60%;
+              transform: translate(-50%, -50%);
+              text-align: center;
+            }
+
+            /* If you want the content centered horizontally and vertically */
+            .centered {
+                align-self: flex-start;
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              text-align: center;
+            }
+
+            /* Style the image inside the centered container, if needed */
+            .centered img {
+              width: 600px;
+              height: 700px;
+              border-radius: 10%;
+            }
